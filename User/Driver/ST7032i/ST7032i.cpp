@@ -12,6 +12,10 @@
 
 namespace ST7032i{
 
+  /*
+   * public
+   */
+
   ST7032i::ST7032i(I2C_HandleTypeDef* hi2c){
     _hi2c = hi2c;
   }
@@ -19,35 +23,50 @@ namespace ST7032i{
   void ST7032i::Init(){
     // wait for boot
     HAL_Delay(40);
-    // init
-    WriteCommand(0x38);
-    HAL_Delay(1);
-    WriteCommand(0x39);
-    HAL_Delay(1);
-    WriteCommand(0x14);
-    HAL_Delay(1);
-    WriteCommand(0x73);
-    HAL_Delay(1);
-    WriteCommand(0x56);
-    HAL_Delay(1);
-    WriteCommand(0x6C);
-    HAL_Delay(200);
-    WriteCommand(0x38);
-    HAL_Delay(1);
-    WriteCommand(0x01);
-    HAL_Delay(1);
-    WriteCommand(0x0C);
+
+    // init register and send command
+    _reg.functionSet = REG_FUNCTION_SET | BM_IF_DATABIT_84_BIT;
+    _WriteCommand(_reg.functionSet);
     HAL_Delay(1);
 
+    _SetInstractionTable1();
+
+    _reg.instructionTable1.internalOSCFrequency = REG_INTERNAL_OSC_FREQ | 0b00000100;
+    _WriteCommand(_reg.instructionTable1.internalOSCFrequency);
+    HAL_Delay(1);
+
+    _reg.instructionTable1.contrastSet = REG_CONTRAST_SET;
+    _WriteCommand(_reg.instructionTable1.contrastSet);
+    HAL_Delay(1);
+
+    _reg.instructionTable1.powerICONControlContrastSet = REG_P_I_C_control | BM_BON_BIT;
+    _reg.instructionTable1.powerICONControlContrastSet |= 0b00000010;  //  C5C4
+    _WriteCommand(_reg.instructionTable1.powerICONControlContrastSet);
+    HAL_Delay(1);
+
+    _reg.instructionTable1.followerControl = REG_FOLLOWER_CONTROL;
+    _reg.instructionTable1.followerControl |= BM_FON | 0b00000100;
+    _WriteCommand(_reg.instructionTable1.followerControl);
+    HAL_Delay(200);
+
+    _SetInstractionTable0();
+
+    // clear Display
+    ClearDisp();
+
+    _reg.displayOnOff = REG_DISPLAY_ONOFF;
+    _reg.displayOnOff |= BM_ENTIRE_DISPLAY_BIT;
+    _WriteCommand(_reg.displayOnOff);
+    HAL_Delay(1);
   }
 
-  bool ST7032i::SetCursor(uint8_t row, uint8_t col){
+  bool ST7032i::SetCursorPos(uint8_t row, uint8_t col){
     if(row <= 2 && col <= 16){
       // LCD char address
       uint8_t cmd = 0x80 + col -1;
       if(row == 2 ) cmd += 0x40;
 
-      WriteCommand(cmd);
+      _WriteCommand(cmd);
       HAL_Delay(1);
       return true;
     } else {
@@ -55,27 +74,57 @@ namespace ST7032i{
     }
   }
 
-//  void ST7032i::SetContrast(uint8_t val){
-//    // set IS = 1
-//    WriteCommand(0x39);
-//    HAL_Delay(1);
-//
-//    // validation
-//    val = val & 0b00111111;
-//
-//    // send contrast value(lower)
-//    WriteCommand(0b01110000 | (0b00001111 & val));
-//    // upper
-//    WriteCommand(0b0101 | (val >> 4));
-//
-//    // set IS = 0
-//    WriteCommand(0x38);
-//    HAL_Delay(1);
-//  }
+  void ST7032i::SetContrast(uint8_t val){
+    // set IS = 1
+    _SetInstractionTable1();
 
-  void ST7032i::Clear(){
-    ST7032i::WriteCommand(0x01);
-    SetCursor(1, 1);
+    // validation
+    if(val > MAX_CONTRAST){
+      val = MAX_CONTRAST;
+    }
+
+    // send contrast value(lower)
+    _reg.instructionTable1.contrastSet = REG_CONTRAST_SET | (BM_REG_CONTRAST_SET_DATA & val);
+    _WriteCommand(_reg.instructionTable1.contrastSet);
+    // upper
+    _reg.instructionTable1.powerICONControlContrastSet &= ~BM_C5C4_DATA;
+    _reg.instructionTable1.powerICONControlContrastSet |= (val >> 4);
+    _WriteCommand(_reg.instructionTable1.powerICONControlContrastSet);
+
+    // set IS = 0
+    _SetInstractionTable0();
+  }
+
+  void ST7032i::SetCursorDisp(bool flg){
+    if(flg){
+      _reg.displayOnOff |= BM_CURSOR_ON_BIT;
+    } else {
+      _reg.displayOnOff &= ~BM_CURSOR_ON_BIT;
+    }
+    _WriteCommand(_reg.displayOnOff);
+  }
+
+  void ST7032i::SetCursorBlink(bool flg){
+    if(flg){
+      _reg.displayOnOff |= BM_CURSOR_BLINK_BIT;
+    } else {
+      _reg.displayOnOff &= ~BM_CURSOR_BLINK_BIT;
+    }
+    _WriteCommand(_reg.displayOnOff);
+  }
+
+  void ST7032i::SetDoubleHeightFont(bool flg){
+    if(flg){
+      _reg.functionSet |= BM_DOUBLE_HEIGHT_FONT;
+    } else {
+      _reg.functionSet &= ~BM_DOUBLE_HEIGHT_FONT;
+    }
+    _WriteCommand(_reg.functionSet);
+  }
+
+  void ST7032i::ClearDisp(){
+    ST7032i::_WriteCommand(_reg.clearDisplay);
+    SetCursorPos(1, 1);
   }
 
   bool ST7032i::sputs(const char *str){
@@ -84,7 +133,7 @@ namespace ST7032i{
       return false;
     }
 
-    WriteData((uint8_t *)str, size);
+    _WriteData((uint8_t *)str, size);
 
     return true;
   }
@@ -101,12 +150,30 @@ namespace ST7032i{
     }
 
     int cnt = vsnprintf(tmp, sizeof(tmp), format_str, args);
-    WriteData((uint8_t *)tmp, cnt);
+    _WriteData((uint8_t *)tmp, cnt);
 
     return cnt;
   }
 
-  bool ST7032i::WriteCommand(const uint8_t cmd){
+  /*
+   * private
+   */
+
+  bool ST7032i::_SetInstractionTable1(){
+    _reg.functionSet |= BM_INSTRUCTION_TABLE_BIT;
+    bool res = _WriteCommand(_reg.functionSet);
+    HAL_Delay(1);
+    return res;
+  }
+
+  bool ST7032i::_SetInstractionTable0(){
+    _reg.functionSet &= ~BM_INSTRUCTION_TABLE_BIT;
+    bool res = _WriteCommand(_reg.functionSet);
+    HAL_Delay(1);
+    return res;
+  }
+
+  bool ST7032i::_WriteCommand(const uint8_t cmd){
 
     uint8_t buffer[2] = { COMMAND_BYTE, cmd};
 
@@ -116,7 +183,7 @@ namespace ST7032i{
 
   }
 
-  bool ST7032i::WriteData(const uint8_t* data, size_t size){
+  bool ST7032i::_WriteData(const uint8_t* data, size_t size){
 
     uint8_t buffer[sizeof(DATA_BYTE) + size];
 
@@ -131,7 +198,5 @@ namespace ST7032i{
     return (res == HAL_OK);
 
   }
-
-
 
 }
