@@ -17,11 +17,11 @@ namespace App{
   class IScreen {
 
     public:
-      IScreen(){};
+      IScreen();
 
       virtual ~IScreen();
 
-      virtual void StartScreen(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> StartScreen(ModelData& modelData);
 
       virtual std::unique_ptr<IScreen> LeftButtonPushed(ModelData& modelData);
 
@@ -35,7 +35,7 @@ namespace App{
 
       virtual std::unique_ptr<IScreen> EncoderTurned(ModelData& modelData, int step);
 
-      virtual std::unique_ptr<IScreen> EndScreen(ModelData& modelData);
+      virtual void EndScreen(ModelData& modelData);
 
   };
 
