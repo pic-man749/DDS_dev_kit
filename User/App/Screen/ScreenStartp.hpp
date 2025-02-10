@@ -9,17 +9,15 @@
 #define APP_SCREEN_SCREENSTARTP_HPP_
 
 #include "App/IScreen.hpp"
-#include "App/ModelData.hpp"
-
 namespace App {
 
   class ScreenStartup : public IScreen {
 
     public:
-      ScreenStartup();
-      ~ScreenStartup();
+      ScreenStartup(){};
+      ~ScreenStartup(){};
 
-      std::unique_ptr<IScreen> StartScreen(ModelData& modelData) override;
+      std::unique_ptr<IScreen> StartScreen() override;
 
   };
 

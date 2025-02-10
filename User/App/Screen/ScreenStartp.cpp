@@ -5,15 +5,15 @@
  *      Author: picman
  */
 #include "ScreenStartp.hpp"
+#include "App/Model.hpp"
 
 namespace App {
 
-  ScreenStartup::ScreenStartup(){
-    ;
-  }
-
-  std::unique_ptr<IScreen> ScreenStartup::StartScreen(ModelData& modelData){
-
+  std::unique_ptr<IScreen> ScreenStartup::StartScreen() {
+    auto lcd = LCD::Instance();
+    lcd->SetDoubleHeightFont(true);
+    lcd->sputs("DDS dev kit");
+    return nullptr;
   }
 
 
