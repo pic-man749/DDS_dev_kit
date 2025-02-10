@@ -8,7 +8,7 @@
 #ifndef APP_ISCREEN_HPP_
 #define APP_ISCREEN_HPP_
 
-#include "ModelData.hpp"
+#include "Model.hpp"
 
 #include <memory>
 
@@ -21,21 +21,21 @@ namespace App{
 
       virtual ~IScreen();
 
-      virtual std::unique_ptr<IScreen> StartScreen(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> StartScreen();
 
-      virtual std::unique_ptr<IScreen> LeftButtonPushed(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> LeftButtonPushed();
 
-      virtual std::unique_ptr<IScreen> BottomButtonPushed(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> BottomButtonPushed();
 
-      virtual std::unique_ptr<IScreen> TopButtonPushed(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> TopButtonPushed();
 
-      virtual std::unique_ptr<IScreen> RightButtonPushed(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> RightButtonPushed();
 
-      virtual std::unique_ptr<IScreen> CenterButtonPushed(ModelData& modelData);
+      virtual std::unique_ptr<IScreen> CenterButtonPushed();
 
-      virtual std::unique_ptr<IScreen> EncoderTurned(ModelData& modelData, int step);
+      virtual std::unique_ptr<IScreen> EncoderTurned(int step);
 
-      virtual void EndScreen(ModelData& modelData);
+      virtual void EndScreen();
 
   };
 

@@ -15,13 +15,9 @@ namespace App {
     _encoder->Start();
     _button = std::make_unique<Button::Button>();
 
-    // init model data
-    _modelData.freqx10 = 1000 * 10;
-    _modelData.waveform = Waveform::Sin;
-
     // init screen
     _screen = std::move(startScreen);
-    _screen->StartScreen(_modelData);
+    _screen->StartScreen();
   }
 
   void Context::LoopAction(){
@@ -32,7 +28,7 @@ namespace App {
     // encoder turned
     auto step = _encoder->GetValue();
     if(step != 0){
-      ret = _screen->EncoderTurned(_modelData, step);
+      ret = _screen->EncoderTurned(step);
     }
 
     if(ret){
@@ -48,23 +44,23 @@ namespace App {
 
       switch(buttonType){
         case Button::ButtonType::LEFT:
-          ret = _screen->LeftButtonPushed(_modelData);
+          ret = _screen->LeftButtonPushed();
           break;
 
         case Button::ButtonType::BOTTOM:
-          ret = _screen->BottomButtonPushed(_modelData);
+          ret = _screen->BottomButtonPushed();
           break;
 
         case Button::ButtonType::TOP:
-          ret = _screen->TopButtonPushed(_modelData);
+          ret = _screen->TopButtonPushed();
           break;
 
         case Button::ButtonType::RIGHT:
-          ret = _screen->RightButtonPushed(_modelData);
+          ret = _screen->RightButtonPushed();
           break;
 
         case Button::ButtonType::CENTER:
-          ret = _screen->CenterButtonPushed(_modelData);
+          ret = _screen->CenterButtonPushed();
           break;
 
         case Button::ButtonType::NONE:
@@ -80,9 +76,9 @@ namespace App {
   }
 
   void Context::MoveScreen(std::unique_ptr<IScreen> nextScreen){
-    _screen->EndScreen(_modelData);
+    _screen->EndScreen();
     _screen = std::move(nextScreen);
-    _screen->StartScreen(_modelData);
+    _screen->StartScreen();
   }
 
   Context::~Context(){
