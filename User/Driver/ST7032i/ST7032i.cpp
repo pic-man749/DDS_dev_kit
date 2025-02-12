@@ -116,8 +116,10 @@ namespace ST7032i{
   void ST7032i::SetDoubleHeightFont(bool flg){
     if(flg){
       _reg.functionSet |= BM_DOUBLE_HEIGHT_FONT;
+      _reg.functionSet &= ~BM_NUM_OF_LINE_21_BIT;
     } else {
       _reg.functionSet &= ~BM_DOUBLE_HEIGHT_FONT;
+      _reg.functionSet |= BM_NUM_OF_LINE_21_BIT;
     }
     _WriteCommand(_reg.functionSet);
   }
