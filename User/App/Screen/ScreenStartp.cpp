@@ -15,7 +15,7 @@ namespace App {
     auto lcd = LCD::Instance();
     lcd->SetDoubleHeightFont(true);
     lcd->sputs("DDS dev kit");
-    HAL_Delay(STARTUP_SCREEN_DURATION);
+    HAL_Delay(STARTUP_SCREEN_DURATION * 1000);
     return std::make_unique<ScreenFreq>();
   }
 
