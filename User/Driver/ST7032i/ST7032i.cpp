@@ -25,7 +25,7 @@ namespace ST7032i{
     HAL_Delay(40);
 
     // init register and send command
-    _reg.functionSet = REG_FUNCTION_SET | BM_IF_DATABIT_84_BIT;
+    _reg.functionSet = REG_FUNCTION_SET | BM_IF_DATABIT_84_BIT | BM_NUM_OF_LINE_21_BIT;
     _WriteCommand(_reg.functionSet);
     HAL_Delay(1);
 
@@ -116,8 +116,10 @@ namespace ST7032i{
   void ST7032i::SetDoubleHeightFont(bool flg){
     if(flg){
       _reg.functionSet |= BM_DOUBLE_HEIGHT_FONT;
+      _reg.functionSet &= ~BM_NUM_OF_LINE_21_BIT;
     } else {
       _reg.functionSet &= ~BM_DOUBLE_HEIGHT_FONT;
+      _reg.functionSet |= BM_NUM_OF_LINE_21_BIT;
     }
     _WriteCommand(_reg.functionSet);
   }
