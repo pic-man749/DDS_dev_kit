@@ -11,31 +11,32 @@
 #include "Model.hpp"
 
 #include <memory>
+#include <optional>
 
 namespace App{
 
   class IScreen {
 
     public:
-      IScreen();
+      IScreen(void);
 
-      virtual ~IScreen();
+      virtual ~IScreen(void);
 
-      virtual std::unique_ptr<IScreen> StartScreen();
+      virtual std::unique_ptr<IScreen> StartScreen(void);
 
-      virtual std::unique_ptr<IScreen> LeftButtonPushed();
+      virtual std::unique_ptr<IScreen> LeftButtonPushed(void);
 
-      virtual std::unique_ptr<IScreen> BottomButtonPushed();
+      virtual std::unique_ptr<IScreen> BottomButtonPushed(void);
 
-      virtual std::unique_ptr<IScreen> TopButtonPushed();
+      virtual std::unique_ptr<IScreen> TopButtonPushed(void);
 
-      virtual std::unique_ptr<IScreen> RightButtonPushed();
+      virtual std::unique_ptr<IScreen> RightButtonPushed(void);
 
-      virtual std::unique_ptr<IScreen> CenterButtonPushed();
+      virtual std::unique_ptr<IScreen> CenterButtonPushed(void);
 
       virtual std::unique_ptr<IScreen> EncoderTurned(int step);
 
-      virtual void EndScreen();
+      virtual void EndScreen(void);
 
   };
 

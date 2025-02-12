@@ -8,35 +8,35 @@
 
 namespace App {
 
-  IScreen::IScreen() {
+  IScreen::IScreen(void) {
     ;
   }
 
-  IScreen::~IScreen() {
+  IScreen::~IScreen(void) {
     ;
   }
 
-  std::unique_ptr<IScreen> IScreen::StartScreen() {
+  std::unique_ptr<IScreen> IScreen::StartScreen(void) {
     return nullptr;
   }
 
-  std::unique_ptr<IScreen> IScreen::LeftButtonPushed() {
+  std::unique_ptr<IScreen> IScreen::LeftButtonPushed(void) {
     return nullptr;
   }
 
-  std::unique_ptr<IScreen> IScreen::BottomButtonPushed() {
+  std::unique_ptr<IScreen> IScreen::BottomButtonPushed(void) {
     return nullptr;
   }
 
-  std::unique_ptr<IScreen> IScreen::TopButtonPushed() {
+  std::unique_ptr<IScreen> IScreen::TopButtonPushed(void) {
     return nullptr;
   }
 
-  std::unique_ptr<IScreen> IScreen::RightButtonPushed() {
+  std::unique_ptr<IScreen> IScreen::RightButtonPushed(void) {
     return nullptr;
   }
 
-  std::unique_ptr<IScreen> IScreen::CenterButtonPushed() {
+  std::unique_ptr<IScreen> IScreen::CenterButtonPushed(void) {
     return nullptr;
   }
 
@@ -44,7 +44,7 @@ namespace App {
     return nullptr;
   }
 
-  void IScreen::EndScreen() {
+  void IScreen::EndScreen(void) {
     ;
   }
 
