@@ -47,7 +47,7 @@ namespace App {
     double freq = ao->GetFreqx10() * 0.1f;
 
     lcd->SetCursorPos(2, 1);
-    lcd->sputsf(" %'08.1d", freq);
+    lcd->sputsf(" %08.1'd", freq);
 
   }
 
