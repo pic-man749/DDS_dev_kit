@@ -17,7 +17,10 @@ namespace App {
 
     // init screen
     _screen = std::move(startScreen);
-    _screen->StartScreen();
+    auto ret = _screen->StartScreen();
+    if(ret != nullptr){
+      MoveScreen(std::move(ret));
+    }
   }
 
   void Context::LoopAction(){
