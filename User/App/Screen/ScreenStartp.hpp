@@ -9,6 +9,7 @@
 #define APP_SCREEN_SCREENSTARTP_HPP_
 
 #include "App/IScreen.hpp"
+
 namespace App {
 
   class ScreenStartup : public IScreen {
@@ -18,6 +19,11 @@ namespace App {
       ~ScreenStartup(){};
 
       std::unique_ptr<IScreen> StartScreen() override;
+
+      void EndScreen() override;
+
+    private:
+      const uint32_t STARTUP_SCREEN_DURATION = 2;
 
   };
 
