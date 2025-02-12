@@ -7,6 +7,8 @@
 #include "ScreenFreq.hpp"
 #include "App/Model.hpp"
 
+#include <stdio.h>
+
 namespace App {
 
   std::unique_ptr<IScreen> ScreenFreq::StartScreen(){
@@ -39,16 +41,46 @@ namespace App {
     lcd->sputs(STR_LINE_2);
   }
 
-  void ScreenFreq::PrintFreq(void){
+  bool ScreenFreq::PrintFreq(void){
+
+    const int BUFFER_SIZE = 16;
+    const int MAX_FREQ_NUM_OF_DIGITS = 8;
 
     auto lcd = LCD::Instance();
     auto ao = AnalogOut::Instance();
 
-    double freq = ao->GetFreqx10() * 0.1f;
+    uint32_t freq = ao->GetFreqx10();
 
-    lcd->SetCursorPos(2, 1);
-    lcd->sputsf(" %08.1'd", freq);
+    char buffer[BUFFER_SIZE] = {0};
+    int size = snprintf(buffer, BUFFER_SIZE, "%08u", (int)freq);
 
+    // too big freq value
+    if(size != MAX_FREQ_NUM_OF_DIGITS){
+      return false;
+    }
+
+    // copy and add "," and "."
+    char lcdBuffer[BUFFER_SIZE] = {0};
+    int lidx = 0;
+    int idx = 0;
+    lcdBuffer[lidx++] = ' ';
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = ',';
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = ',';
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = '.';
+    lcdBuffer[lidx++] = buffer[idx++];
+    lcdBuffer[lidx++] = '\0';
+
+    lcd->SetCursorPos(2,  1);
+    lcd->sputs(lcdBuffer);
+
+    return true;
   }
 
 }

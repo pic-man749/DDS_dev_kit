@@ -24,7 +24,7 @@ namespace App {
       void PrintLabelLine1(void);
       void PrintLabelLine2(void);
 
-      void PrintFreq(void);
+      bool PrintFreq(void);
 
   };
 
