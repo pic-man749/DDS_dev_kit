@@ -40,7 +40,7 @@ namespace App {
     }
 
     // button pushed
-    static auto oldButtonType = _button->GetPushedButton();
+    static auto oldButtonType = Button::ButtonType::NONE;
     auto buttonType = _button->GetPushedButton();
 
     if(buttonType != oldButtonType){
@@ -70,6 +70,8 @@ namespace App {
           ;
           break;
       }
+
+      oldButtonType = buttonType;
 
       if(ret){
         MoveScreen(std::move(ret));
