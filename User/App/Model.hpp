@@ -40,7 +40,7 @@ namespace App {
     public:
       static AnalogOut* Instance(void);
 
-      void SetFreq(uint32_t fx10);
+      void SetFreqx10(uint32_t fx10);
 
       uint32_t GetFreqx10(void);
 
@@ -57,7 +57,7 @@ namespace App {
       AnalogOut(AnalogOut &&) = delete;
       AnalogOut& operator=(AnalogOut &&) = delete;
 
-
+      const uint32_t MAX_FREQ_X10 = 99999999;
       uint32_t _freqx10;
       Waveform _waveform;
 
