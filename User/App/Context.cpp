@@ -29,9 +29,12 @@ namespace App {
     std::unique_ptr<IScreen> ret = nullptr;
 
     // encoder turned
+    static int oldStep = 0;
     auto step = _encoder->GetValue();
-    if(step != 0){
-      ret = _screen->EncoderTurned(step);
+    int diff = step - oldStep;
+    if(diff != 0){
+      ret = _screen->EncoderTurned(diff);
+      oldStep = step;
     }
 
     if(ret){
