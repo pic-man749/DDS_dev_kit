@@ -21,7 +21,12 @@ namespace App {
       Square
   };
 
-  class LCD : public ST7032i::ST7032i {
+  /// @fn void ShowOutputStatus(void)
+  /// @brief show analogOut output state on LCD
+  ///
+  void PutsOutputStatus(void);
+
+  class LCD : public ST7032i_Driver::ST7032i {
 
     public:
       static LCD* Instance(void);
@@ -35,7 +40,7 @@ namespace App {
 
   };
 
-  class AnalogOut : private NS_AD9833::AD9833 {
+  class AnalogOut : private AD9833_Driver::AD9833 {
 
     public:
       static AnalogOut* Instance(void);
@@ -50,6 +55,8 @@ namespace App {
 
       void SetWaveform(Waveform wf);
 
+      bool GetOutputStatus(void);
+
     private:
       AnalogOut();
       AnalogOut(const AnalogOut&) = delete;
@@ -60,6 +67,7 @@ namespace App {
       const uint32_t MAX_FREQ_X10 = 99999999;
       uint32_t _freqx10;
       Waveform _waveform;
+      bool _isOutput = false;
 
   };
 

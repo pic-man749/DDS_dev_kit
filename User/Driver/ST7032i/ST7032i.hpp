@@ -10,7 +10,7 @@
 
 #include "stm32l4xx_hal.h"
 
-namespace ST7032i {
+namespace ST7032i_Driver {
 
   constexpr uint8_t DEVICE_ADDR = 0x3E;
   constexpr uint8_t WRITE_ADDR = ( DEVICE_ADDR << 1 ) | 0x00;

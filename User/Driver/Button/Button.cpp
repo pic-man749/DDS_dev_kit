@@ -6,7 +6,7 @@
  */
 #include "Button.hpp"
 
-namespace Button {
+namespace Button_Driver {
 
   Button::Button(){
     ;
@@ -56,10 +56,10 @@ namespace Button {
         uint32_t now = HAL_GetTick();
         // overflow
         if(now < startTick){
-          if(now + (0xFFFFFFFF - startTick) + 1 >= timeout_ms){
+          if(now + (0xFFFFFFFF - startTick) + 1 >= static_cast<uint32_t>(timeout_ms)){
             break;
           }
-        } else if(now - startTick >= timeout_ms) {
+        } else if(now - startTick >= static_cast<uint32_t>(timeout_ms)) {
           break;
         }
       }

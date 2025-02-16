@@ -10,6 +10,28 @@
 
 namespace App {
 
+  namespace {
+    constexpr uint32_t AD9833_OSC_FREQ = 25000000;
+    constexpr uint32_t AD9833_INITIAL_FREQ = 1000;
+
+    constexpr uint8_t OUTPUT_STATUS_ROW = 1;
+    constexpr uint8_t OUTPUT_STATUS_COL = 14;
+  }
+
+  void PutsOutputStatus(void) {
+    auto lcd = LCD::Instance();
+    auto ao = AnalogOut::Instance();
+
+    lcd->SetCursorPos(OUTPUT_STATUS_ROW, OUTPUT_STATUS_COL);
+
+    if(ao->GetOutputStatus()){
+      lcd->sputs("ON ");
+    } else {
+      lcd->sputs("OFF");
+    }
+
+  }
+
   LCD::LCD() : ST7032i(&hi2c1) {
     this->Init();
   }
@@ -20,9 +42,9 @@ namespace App {
   }
 
   AnalogOut::AnalogOut(void) :
-      AD9833(25000000, &hspi1, AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin) {
+      AD9833(AD9833_OSC_FREQ, &hspi1, AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin) {
     // init model data
-    _freqx10 = 1000 * 10;
+    _freqx10 = AD9833_INITIAL_FREQ * 10;
     _waveform = Waveform::Sin;
   }
 
@@ -48,6 +70,7 @@ namespace App {
   }
 
   void AnalogOut::SetOutput(bool f) {
+    _isOutput = f;
     this->setOutputStatus(f);
   }
 
@@ -56,15 +79,19 @@ namespace App {
 
     switch(wf){
       case Waveform::Sin:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
       case Waveform::Square:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
       case Waveform::Triangle:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
     }
+  }
+
+  bool AnalogOut::GetOutputStatus(void) {
+    return _isOutput;
   }
 
 }

@@ -11,9 +11,9 @@ namespace App {
 
   Context::Context(std::unique_ptr<IScreen> startScreen) {
     // init inputs
-    _encoder = std::make_unique<Encoder::Encoder>(&htim2);
+    _encoder = std::make_unique<Encoder_Driver::Encoder>(&htim2);
     _encoder->Start();
-    _button = std::make_unique<Button::Button>();
+    _button = std::make_unique<Button_Driver::Button>();
 
     // init screen
     _screen = std::move(startScreen);
@@ -43,33 +43,33 @@ namespace App {
     }
 
     // button pushed
-    static auto oldButtonType = Button::ButtonType::NONE;
+    static auto oldButtonType = Button_Driver::ButtonType::NONE;
     auto buttonType = _button->GetPushedButton();
 
     if(buttonType != oldButtonType){
 
       switch(buttonType){
-        case Button::ButtonType::LEFT:
+        case Button_Driver::ButtonType::LEFT:
           ret = _screen->LeftButtonPushed();
           break;
 
-        case Button::ButtonType::BOTTOM:
+        case Button_Driver::ButtonType::BOTTOM:
           ret = _screen->BottomButtonPushed();
           break;
 
-        case Button::ButtonType::TOP:
+        case Button_Driver::ButtonType::TOP:
           ret = _screen->TopButtonPushed();
           break;
 
-        case Button::ButtonType::RIGHT:
+        case Button_Driver::ButtonType::RIGHT:
           ret = _screen->RightButtonPushed();
           break;
 
-        case Button::ButtonType::CENTER:
+        case Button_Driver::ButtonType::CENTER:
           ret = _screen->CenterButtonPushed();
           break;
 
-        case Button::ButtonType::NONE:
+        case Button_Driver::ButtonType::NONE:
           ;
           break;
       }
