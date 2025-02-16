@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-namespace ST7032i{
+namespace ST7032i_Driver {
 
   /*
    * public

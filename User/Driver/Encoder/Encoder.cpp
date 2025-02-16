@@ -6,7 +6,7 @@
  */
 #include "Encoder.hpp"
 
-namespace Encoder{
+namespace Encoder_Driver {
 
   Encoder::Encoder(TIM_HandleTypeDef *htim){
     _htim = htim;

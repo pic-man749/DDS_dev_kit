@@ -56,13 +56,13 @@ namespace App {
 
     switch(wf){
       case Waveform::Sin:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
       case Waveform::Square:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
       case Waveform::Triangle:
-        this->setVoutType(NS_AD9833::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
     }
   }

@@ -10,7 +10,7 @@
 
 #include "gpio.h"
 
-namespace Button {
+namespace Button_Driver {
 
   enum class ButtonType{
       NONE,

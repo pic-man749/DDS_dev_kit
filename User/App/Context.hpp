@@ -27,8 +27,8 @@ namespace App {
     private:
       std::unique_ptr<IScreen> _screen;
 
-      std::unique_ptr<Encoder::Encoder> _encoder;
-      std::unique_ptr<Button::Button> _button;
+      std::unique_ptr<Encoder_Driver::Encoder> _encoder;
+      std::unique_ptr<Button_Driver::Button> _button;
 
       void MoveScreen(std::unique_ptr<IScreen> nextScreen);
 

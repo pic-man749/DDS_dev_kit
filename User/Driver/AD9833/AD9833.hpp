@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include "stm32l4xx_hal.h"
 
-namespace NS_AD9833 {
+namespace AD9833_Driver {
 
   // AD9833 Control register
   constexpr uint16_t CTRLREG_B28      = 0b1<<13;

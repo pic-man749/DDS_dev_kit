@@ -21,7 +21,7 @@ namespace App {
       Square
   };
 
-  class LCD : public ST7032i::ST7032i {
+  class LCD : public ST7032i_Driver::ST7032i {
 
     public:
       static LCD* Instance(void);
@@ -35,7 +35,7 @@ namespace App {
 
   };
 
-  class AnalogOut : private NS_AD9833::AD9833 {
+  class AnalogOut : private AD9833_Driver::AD9833 {
 
     public:
       static AnalogOut* Instance(void);

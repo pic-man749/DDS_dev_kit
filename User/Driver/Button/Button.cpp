@@ -6,7 +6,7 @@
  */
 #include "Button.hpp"
 
-namespace Button {
+namespace Button_Driver {
 
   Button::Button(){
     ;
