@@ -31,9 +31,12 @@ namespace App {
     return analogOut;
   }
 
-  void AnalogOut::SetFreq(uint32_t fx10) {
+  void AnalogOut::SetFreqx10(uint32_t fx10) {
+    if(fx10 > MAX_FREQ_X10){
+      return; // do not change
+    }
     this->_freqx10 = fx10;
-    this->SetFreq((double)fx10 / 10.0);
+    this->setFreq((double)fx10 / 10.0);
   }
 
   uint32_t AnalogOut::GetFreqx10(void) {

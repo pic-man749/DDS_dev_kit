@@ -29,9 +29,12 @@ namespace App {
     std::unique_ptr<IScreen> ret = nullptr;
 
     // encoder turned
+    static int oldStep = 0;
     auto step = _encoder->GetValue();
-    if(step != 0){
-      ret = _screen->EncoderTurned(step);
+    int diff = step - oldStep;
+    if(diff != 0){
+      ret = _screen->EncoderTurned(diff);
+      oldStep = step;
     }
 
     if(ret){
@@ -40,7 +43,7 @@ namespace App {
     }
 
     // button pushed
-    static auto oldButtonType = _button->GetPushedButton();
+    static auto oldButtonType = Button::ButtonType::NONE;
     auto buttonType = _button->GetPushedButton();
 
     if(buttonType != oldButtonType){
@@ -70,6 +73,8 @@ namespace App {
           ;
           break;
       }
+
+      oldButtonType = buttonType;
 
       if(ret){
         MoveScreen(std::move(ret));
