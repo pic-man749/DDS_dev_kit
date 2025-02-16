@@ -60,6 +60,16 @@ namespace App {
   }
 
   std::unique_ptr<IScreen> ScreenFreq::CenterButtonPushed(void) {
+    // get now output status and toggle status, then puts status
+    auto ao = AnalogOut::Instance();
+    bool f = ao->GetOutputStatus();
+    ao->SetOutput(!f);
+    App::PutsOutputStatus();
+
+    // restore cursor position
+    auto lcd = LCD::Instance();
+    lcd->SetCursorPos(2, Digit2Pos[_selectedDigit.GetNowPos()]);
+
     return nullptr;
   }
 
