@@ -13,6 +13,23 @@ namespace App {
   namespace {
     constexpr uint32_t AD9833_OSC_FREQ = 25000000;
     constexpr uint32_t AD9833_INITIAL_FREQ = 1000;
+
+    constexpr uint8_t OUTPUT_STATUS_ROW = 1;
+    constexpr uint8_t OUTPUT_STATUS_COL = 14;
+  }
+
+  void PutsOutputStatus(void) {
+    auto lcd = LCD::Instance();
+    auto ao = AnalogOut::Instance();
+
+    lcd->SetCursorPos(OUTPUT_STATUS_ROW, OUTPUT_STATUS_COL);
+
+    if(ao->GetOutputStatus()){
+      lcd->sputs("ON ");
+    } else {
+      lcd->sputs("OFF");
+    }
+
   }
 
   LCD::LCD() : ST7032i(&hi2c1) {
@@ -53,6 +70,7 @@ namespace App {
   }
 
   void AnalogOut::SetOutput(bool f) {
+    _isOutput = f;
     this->setOutputStatus(f);
   }
 
@@ -70,6 +88,10 @@ namespace App {
         this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
     }
+  }
+
+  bool AnalogOut::GetOutputStatus(void) {
+    return _isOutput;
   }
 
 }
