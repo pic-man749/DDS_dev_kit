@@ -10,6 +10,11 @@
 
 namespace App {
 
+  namespace {
+    constexpr uint32_t AD9833_OSC_FREQ = 25000000;
+    constexpr uint32_t AD9833_INITIAL_FREQ = 1000;
+  }
+
   LCD::LCD() : ST7032i(&hi2c1) {
     this->Init();
   }
@@ -20,9 +25,9 @@ namespace App {
   }
 
   AnalogOut::AnalogOut(void) :
-      AD9833(25000000, &hspi1, AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin) {
+      AD9833(AD9833_OSC_FREQ, &hspi1, AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin) {
     // init model data
-    _freqx10 = 1000 * 10;
+    _freqx10 = AD9833_INITIAL_FREQ * 10;
     _waveform = Waveform::Sin;
   }
 
