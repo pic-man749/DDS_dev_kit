@@ -37,6 +37,7 @@ namespace App {
     PrintLabelLine1();
     PrintLabelLine2();
     PrintFreq();
+    App::PutsOutputStatus();
 
     auto lcd = LCD::Instance();
     lcd->SetCursorPos(2, Digit2Pos[_selectedDigit.GetNowPos()]);
