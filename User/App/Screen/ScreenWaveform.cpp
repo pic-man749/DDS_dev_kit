@@ -37,6 +37,8 @@ namespace App {
       ao->SetWaveform(_waveform);
     }
 
+    PrintWaveform();
+
     return nullptr;
   }
 
@@ -61,6 +63,8 @@ namespace App {
       _waveform = static_cast<App::Waveform>(nowWF + 1);
       ao->SetWaveform(_waveform);
     }
+
+    PrintWaveform();
 
     return nullptr;
   }
@@ -94,10 +98,10 @@ namespace App {
   void ScreenWaveform::PrintWaveform(void) {
     auto wf = AnalogOut::Instance()->GetWaveform();
 
-    static const char* STR_SIN = "SIN";
+    static const char* STR_SIN = "SIN     ";
     static const char* STR_TRI = "TRIANGLE";
-    static const char* STR_SQ = "SQUARE";
-    static const char* STR_NONE = "NONE";
+    static const char* STR_SQ = "SQUARE  ";
+    static const char* STR_NONE = "NONE    ";
 
     auto lcd = LCD::Instance();
 
