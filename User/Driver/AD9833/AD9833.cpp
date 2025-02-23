@@ -6,7 +6,7 @@
  */
 #include "AD9833.hpp"
 
-namespace AD9833 {
+namespace AD9833_Driver {
 
   AD9833::AD9833(uint32_t osc_freq, SPI_HandleTypeDef* hspi, GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin){
     _oscFreq = osc_freq;

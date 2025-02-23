@@ -10,7 +10,7 @@
 
 #include "stm32l4xx_hal.h"
 
-namespace Encoder {
+namespace Encoder_Driver {
 
   class Encoder {
 
