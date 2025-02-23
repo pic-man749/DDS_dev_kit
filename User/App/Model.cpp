@@ -82,10 +82,10 @@ namespace App {
         this->setVoutType(AD9833_Driver::VoutType::SIN);
         break;
       case Waveform::Square:
-        this->setVoutType(AD9833_Driver::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::DACMSB_DIV2);
         break;
       case Waveform::Triangle:
-        this->setVoutType(AD9833_Driver::VoutType::SIN);
+        this->setVoutType(AD9833_Driver::VoutType::TRIANGLE);
         break;
     }
   }
