@@ -15,11 +15,12 @@
 
 namespace App {
 
-  enum class Waveform {
-      Sin,
+  enum class Waveform : uint8_t {
+      Sin = 0,
       Triangle,
       Square
   };
+  const uint8_t WAVEFORM_ITEM_NUM = 3;
 
   /// @fn void ShowOutputStatus(void)
   /// @brief show analogOut output state on LCD

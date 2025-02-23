@@ -6,6 +6,7 @@
  */
 #include "ScreenFreq.hpp"
 #include "App/Model.hpp"
+#include "ScreenWaveform.hpp"
 
 #include <stdio.h>
 
@@ -51,6 +52,14 @@ namespace App {
     auto lcd = LCD::Instance();
     lcd->SetCursorPos(2, Digit2Pos[digit]);
     return nullptr;
+  }
+
+  std::unique_ptr<IScreen> ScreenFreq::BottomButtonPushed(void){
+    return std::make_unique<ScreenWaveform>();
+  }
+
+  std::unique_ptr<IScreen> ScreenFreq::TopButtonPushed(void){
+    return std::make_unique<ScreenWaveform>();
   }
 
   std::unique_ptr<IScreen> ScreenFreq::RightButtonPushed(void) {
