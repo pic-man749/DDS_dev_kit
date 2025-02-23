@@ -9,6 +9,10 @@
 
 namespace App {
 
+  ScreenWaveform::ScreenWaveform() {
+    ;
+  }
+
   std::unique_ptr<IScreen> ScreenWaveform::StartScreen(){
 
     _waveform = AnalogOut::Instance()->GetWaveform();

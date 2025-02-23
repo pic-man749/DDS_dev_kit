@@ -37,9 +37,9 @@ namespace App {
 
       std::unique_ptr<IScreen> LeftButtonPushed(void);
 
-//      std::unique_ptr<IScreen> BottomButtonPushed(void);
+      std::unique_ptr<IScreen> BottomButtonPushed(void);
 
-//      std::unique_ptr<IScreen> TopButtonPushed(void);
+      std::unique_ptr<IScreen> TopButtonPushed(void);
 
       std::unique_ptr<IScreen> RightButtonPushed(void);
 
