@@ -6,6 +6,7 @@
  */
 #include "Context.hpp"
 #include "tim.h"
+#include "Model.hpp"
 
 namespace App {
 
@@ -21,6 +22,12 @@ namespace App {
     if(ret != nullptr){
       MoveScreen(std::move(ret));
     }
+
+    // init analogOut
+    auto ao = AnalogOut::Instance();
+    ao->SetOutput(false);
+    ao->SetWaveform(ao->GetWaveform());
+    ao->SetFreqx10(ao->GetFreqx10());
   }
 
   void Context::LoopAction(){
