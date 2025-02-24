@@ -27,6 +27,9 @@ namespace App {
     static const uint8_t Digit2Pos[] = {12, 10, 9, 8, 6, 5, 4, 2};
   }
 
+  /// @class ScreenFreq
+  /// @brief This screen controls the output frequency.
+  ///
   class ScreenFreq : public IScreen {
 
     public:
