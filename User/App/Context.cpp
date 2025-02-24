@@ -25,6 +25,7 @@ namespace App {
 
     // init analogOut
     auto ao = AnalogOut::Instance();
+    ao->SetOutput(false);
     ao->SetWaveform(ao->GetWaveform());
     ao->SetFreqx10(ao->GetFreqx10());
   }
