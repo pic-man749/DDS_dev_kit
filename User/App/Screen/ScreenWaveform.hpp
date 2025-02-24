@@ -15,6 +15,9 @@
 
 namespace App {
 
+  /// @class ScreenWaveform
+  /// @brief This screen controls the output waveform.
+  ///
   class ScreenWaveform : public IScreen {
 
     public:

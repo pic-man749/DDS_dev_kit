@@ -12,6 +12,9 @@
 
 namespace App {
 
+  /// @class ScreenStartup
+  /// @brief This screen show startup logo 'DDS dev kit'.
+  ///
   class ScreenStartup : public IScreen {
 
     public:

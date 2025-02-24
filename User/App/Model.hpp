@@ -15,10 +15,13 @@
 
 namespace App {
 
+  /// @enum Waveform
+  /// @brief waveform enum for Model layer.
+  ///
   enum class Waveform : uint8_t {
-      Sin = 0,
-      Triangle,
-      Square
+      Sin = 0, ///< Sin
+      Triangle,///< Triangle
+      Square   ///< Square
   };
   const uint8_t WAVEFORM_ITEM_NUM = 3;
 
@@ -27,6 +30,9 @@ namespace App {
   ///
   void PutsOutputStatus(void);
 
+  /// @class LCD
+  /// @brief LCD class for Model layer.
+  ///
   class LCD : public ST7032i_Driver::ST7032i {
 
     public:
@@ -41,21 +47,54 @@ namespace App {
 
   };
 
+  /// @class AnalogOut
+  /// @brief Analog output for Model layer.
+  ///
   class AnalogOut : private AD9833_Driver::AD9833 {
 
     public:
+      /// @fn AnalogOut Instance*(void)
+      /// @brief Get AnalogOut instance(singleton)
+      ///
+      /// @return instance of AnalogOut
       static AnalogOut* Instance(void);
 
+      /// @fn void SetFreqx10(uint32_t)
+      /// @brief Set output frequency.
+      ///
+      /// @param fx10 frequency * 10
       void SetFreqx10(uint32_t fx10);
 
+      /// @fn uint32_t GetFreqx10(void)
+      /// @brief Get now frequency.
+      ///
+      /// @return freq * 10
       uint32_t GetFreqx10(void);
 
+      /// @fn Waveform GetWaveform(void)
+      /// @brief Get now waveform.
+      ///
+      /// @return now waveform
       Waveform GetWaveform(void);
 
+      /// @fn void SetOutput(bool)
+      /// @brief Set output status
+      ///
+      /// @param f true enable
+      /// @param f true disable
       void SetOutput(bool f);
 
+      /// @fn void SetWaveform(Waveform)
+      /// @brief Set waveform
+      ///
+      /// @param wf waveform
       void SetWaveform(Waveform wf);
 
+      /// @fn bool GetOutputStatus(void)
+      /// @brief Get now output status.
+      ///
+      /// @return true output enabled
+      /// @return true output disabled
       bool GetOutputStatus(void);
 
     private:
