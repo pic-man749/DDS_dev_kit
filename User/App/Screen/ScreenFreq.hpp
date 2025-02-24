@@ -35,19 +35,19 @@ namespace App {
 
       std::unique_ptr<IScreen> StartScreen(void) override;
 
-      std::unique_ptr<IScreen> LeftButtonPushed(void);
+      std::unique_ptr<IScreen> LeftButtonPushed(void) override;
 
-      std::unique_ptr<IScreen> BottomButtonPushed(void);
+      std::unique_ptr<IScreen> BottomButtonPushed(void) override;
 
-      std::unique_ptr<IScreen> TopButtonPushed(void);
+      std::unique_ptr<IScreen> TopButtonPushed(void) override;
 
-      std::unique_ptr<IScreen> RightButtonPushed(void);
+      std::unique_ptr<IScreen> RightButtonPushed(void) override;
 
-      std::unique_ptr<IScreen> CenterButtonPushed(void);
+      std::unique_ptr<IScreen> CenterButtonPushed(void) override;
 
-      std::unique_ptr<IScreen> EncoderTurned(int step);
+      std::unique_ptr<IScreen> EncoderTurned(int step) override;
 
-      void EndScreen(void);
+      void EndScreen(void) override;
 
     private:
 
